@@ -12,7 +12,7 @@ def replacements(tm):
     # Normalize spaces and remove linebreaks
     tm = re.sub(r'\s+', ' ', tm)
     # Format lines and reinsert linebreaks
-    tm = re.sub(r'<tu[>\s][^་]+?"folio">[Ff](\.\d+\.[ab])[^་]+?<seg>([^<]+)</seg>[^་]+?<seg>([^<]+)</seg>[^་]+?</tu>\s+', r'\2\t\3 (F\1)\n', tm)
+    tm = re.sub(r'<tu[>\s][^་]+?"folio"\s*[^>"]*"*(V\d+)*"*>[Ff](\.\d+\.[ab])[^་]+?<seg>([^<]+)</seg>[^་]+?<seg>([^<]+)</seg>[^་]+?</tu>\s+', r'\3\t\4 (F\2-\1)\n', tm)
     # Remove front and end matter
     tm = re.sub(r'<tmx[^་]+?(<body>)\s*', '', tm)
     tm = re.sub(r'</body>\s*</tmx>\s*', '', tm)
@@ -37,7 +37,7 @@ def add_toh(tm, toh_to_add):
     lines = '\n'.join(lines)
     return lines
 
-# This is the primary function in the script to process all TMX files 
+# This is the primary function in the script to process all TMX files
 # in directory "input_84000_tms" and write to "ready_to_merge_84000"
 def preprocess(in_dir, out_dir):
     # get path for TMX in input_84000_tms
@@ -48,7 +48,7 @@ def preprocess(in_dir, out_dir):
         # access toh number from file
         get_fname = file.name
         toh_to_add = re.sub(r'Toh_(\d+).+', r'\1', get_fname)
-        
+
         # process TMX v1 and 2
         tm = file.read_text(encoding='utf-8-sig')
         tm = replacements(tm)
