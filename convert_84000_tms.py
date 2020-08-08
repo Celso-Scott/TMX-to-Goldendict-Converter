@@ -17,7 +17,7 @@ def replacements(tm):
     tm = re.sub(r'<tmx[^་]+?(<body>)\s*', '', tm)
     tm = re.sub(r'</body>\s*</tmx>\s*', '', tm)
     # Add Toh and info
-    tm = re.sub(r'\((F\.\d+\.[ab])\)', r'(Toh - \1)', tm)
+    tm = re.sub(r'\((F\.\d+\.[ab])', r'(Toh - \1', tm)
     return tm
 
 # Add the toh number to the end of each entry
